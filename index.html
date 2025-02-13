@@ -20,14 +20,23 @@
 
     <script>
         document.addEventListener("DOMContentLoaded", async function () {
-            // Initialize MindAR Worker
-            const mindarWorker = new window.MINDAR.IMAGE.MindARWorker({
+            
+            console.log("Starting WebAR app...");
+
+            // Ensure MindAR is loaded before using it
+            if (!window.MINDAR || !window.MINDAR.IMAGE) {
+                console.error("MindAR failed to load.");
+                return;
+            }
+
+            // Initialize MindAR
+            const mindarThree = new window.MINDAR.IMAGE.MindARThree({
                 container: document.body,
-                imageTargetSrc: "https://pfrgi.github.io/Soiree/targets.mind",
+                imageTargetSrc: "http://pfrgi.github.io/Soiree/targets.mind",
             });
 
-            mindarWorker.onReady = async () => {
-                console.log("MindAR is ready!");
+            await mindarThree.start();
+            console.log("MindAR is ready!");
 
             // Initialize Babylon.js Scene
             const canvas = document.getElementById("renderCanvas");
