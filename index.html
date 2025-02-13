@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebAR with MindAR.js + Babylon.js</title>
+
+    <!-- Load Babylon.js -->
+    <script src="https://cdn.babylonjs.com/babylon.js"></script>
+
+    <!-- Load MindAR.js -->
+    <script src="https://cdn.jsdelivr.net/npm/mind-ar@latest/dist/mindar-image-three.prod.js"></script>
+    <style>
+        body { margin: 0; overflow: hidden; }
+        canvas { width: 100%; height: 100% }
+    </style>
+</head>
+<body>
+    <canvas id="renderCanvas"></canvas> <!-- Babylon.js requires a canvas -->
+
+    <script>
+        document.addEventListener("DOMContentLoaded", async function () {
+            // Initialize MindAR
+            const mindarThree = new window.MINDAR.IMAGE.MindARThree({
+                container: document.body,
+                imageTargetSrc: "targets.mind",
+            });
+
+            await mindarThree.start();
+
+            // Initialize Babylon.js Scene
+            const canvas = document.getElementById("renderCanvas");
+            const engine = new BABYLON.Engine(canvas, true);
+            const scene = new BABYLON.Scene(engine);
+            const camera = new BABYLON.ArcRotateCamera("Camera", Math.PI / 2, Math.PI / 4, 4, BABYLON.Vector3.Zero(), scene);
+            camera.attachControl(canvas, true);
+            const light = new BABYLON.HemisphericLight("light", new BABYLON.Vector3(0, 1, 0), scene);
+
+            // Add a simple 3D object (a sphere)
+            const sphere = BABYLON.MeshBuilder.CreateSphere("sphere", { diameter: 1 }, scene);
+
+            // Render the scene
+            engine.runRenderLoop(() => {
+                scene.render();
+            });
+
+            // Resize event
+            window.addEventListener("resize", () => {
+                engine.resize();
+            });
+        });
+    </script>
+</body>
+</html>
