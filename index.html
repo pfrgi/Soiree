@@ -73,6 +73,7 @@
                     const sphere = BABYLON.MeshBuilder.CreateSphere("sphere", { diameter: 1 }, scene);
                     sphere.position = new BABYLON.Vector3(0, 0, 0); // Center it on the target
                     sphere.scaling = new BABYLON.Vector3(1, 1, 1); // Ensures uniform scaling
+                    sphere.setPivotMatrix(BABYLON.Matrix.Identity());
                     };
 
                 // Listen for image detection
