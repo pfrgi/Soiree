@@ -94,11 +94,16 @@
                     });
 
                 // Resize event
-                window.addEventListener("visibilitychange", () => {
-                    console.log("Resizing..");
-                    canvas.width = window.innerWidth;
-                    canvas.height = window.innerHeight;
-                    engine.resize();
+                document.addEventListener("visibilitychange", () => {
+                    if (!document.hidden) {
+                        console.log("Resizing..");
+                        canvas.width = window.innerWidth;
+                        canvas.height = window.innerHeight;
+                        engine.resize();
+                        }
+                    else{
+                        console.log("No changes made");
+                        }
                     });
                 
                 } catch (error) {
