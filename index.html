@@ -41,7 +41,7 @@
                 // Initialize MindAR
                 const mindarThree = new window.MINDAR.IMAGE.MindARThree({
                     container: document.getElementById("mindar-container"),
-                    imageTargetSrc: "https://cdn.jsdelivr.net/npm/mind-ar@1.1.0/examples/image-tracking/assets/card-example/card.mind",
+                    imageTargetSrc: "https://pfrgi.github.io/Soiree/targets5.mind",
                     maxTrack: 1,  // Ensure only 1 target is tracked at a time
                     filterMinCF: 0.01, // Lower confidence threshold for testing
                     filterBeta: 1000, // Increase tracking stability
@@ -62,16 +62,7 @@
 
                 // Hide Babylon.js canvas until MindAR detects image
                 canvas.style.display = "none";
-
-                
-                /*mindarThree.on("detect", (target) => {
-                    console.log(`Target detected: ${target}`);
-                    });
-                mindarThree.on("lose", (target) => {
-                    console.log(`Lost target: ${target}`);
-                    });*/
-
-
+               
                 // ...
                 const anchor = mindarThree.addAnchor(0); // Attach to the first MindAR target
 
