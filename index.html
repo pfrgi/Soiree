@@ -61,6 +61,13 @@
                 camera.attachControl(canvas, true);
                 const light = new BABYLON.HemisphericLight("light", new BABYLON.Vector3(0, 1, 0), scene);
 
+                document.addEventListener("visibilitychange", () => {
+                    if (!document.hidden) {
+                        engine.resize(); // Resize Babylon engine
+                        console.log("Page visibility changed, resizing engine.");
+                        }
+                    });
+
                 // Hide Babylon.js canvas until MindAR detects image
                 canvas.style.display = "none";
                
@@ -94,11 +101,12 @@
                     canvas.height = window.innerHeight;
                     engine.resize();
                     });
-               
+                  
                 } catch (error) {
                 console.error("An error occurred:", error);
                 }
-        });   
+        }); 
+        
     </script>
 </body>
 </html>
