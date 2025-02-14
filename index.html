@@ -41,11 +41,16 @@
                 // Initialize MindAR
                 const mindarThree = new window.MINDAR.IMAGE.MindARThree({
                     container: document.getElementById("mindar-container"),
-                    imageTargetSrc: "https://pfrgi.github.io/Soiree/targets15.mind",
+                    imageTargetSrc: "https://cdn.jsdelivr.net/npm/mind-ar@1.1.0/examples/image-tracking/assets/card-example/card.mind",
+                    maxTrack: 1,  // Ensure only 1 target is tracked at a time
+                    filterMinCF: 0.01, // Lower confidence threshold for testing
+                    filterBeta: 1000, // Increase tracking stability
                     });
+                
+                console.log("📷 Requesting camera access...");
 
                 await mindarThree.start();
-                console.log("MindAR is ready!");
+                console.log("Camera access granted, MindAR is ready!");
 
                 // Initialize Babylon.js Scene
                 const canvas = document.getElementById("renderCanvas");
@@ -89,3 +94,4 @@
     </script>
 </body>
 </html>
+
