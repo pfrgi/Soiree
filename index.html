@@ -61,18 +61,6 @@
                 camera.attachControl(canvas, true);
                 const light = new BABYLON.HemisphericLight("light", new BABYLON.Vector3(0, 1, 0), scene);   
                 
-                document.addEventListener("visibilitychange", () => {
-                    if (!document.hidden) {
-                        console.log("Page became visible again.");
-                        if (typeof engine !== "undefined") {
-                            engine.resize();
-                            console.log("Engine resized successfully.");
-                        } else {
-                        console.warn("Engine is undefined, cannot resize.");
-                        }
-                        }
-                    });
-                
                 /*document.addEventListener("click", () => {
                     console.log("Manually triggering resize.");
                     engine.resize()
@@ -106,19 +94,15 @@
                     });
 
                 // Resize event
-                window.addEventListener("resize", () => {
-                    canvas.width = window.innerWidth;
-                    canvas.height = window.innerHeight;
-                    engine.resize();
-                    });
-
-                /*window.addEventListener("visibilitychange", () => {
+                window.addEventListener("visibilitychange", () => {
                     if (!document.hidden) {
-                    console.log("Page became visible again. Forcing resize...");
-                    window.dispatchEvent(new Event("resize")); // Manually trigger the resize event
-                     }
-                    });*/
-                  
+                        console.log("Resizing..");
+                        canvas.width = window.innerWidth;
+                        canvas.height = window.innerHeight;
+                        engine.resize();
+                    }
+                    });
+                
                 } catch (error) {
                 console.error("An error occurred:", error);
                 }
