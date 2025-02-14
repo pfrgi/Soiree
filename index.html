@@ -61,14 +61,9 @@
                 camera.attachControl(canvas, true);
                 const light = new BABYLON.HemisphericLight("light", new BABYLON.Vector3(0, 1, 0), scene);
 
-                document.addEventListener("visibilitychange", () => {
-                    if (!document.hidden) {
-                        engine.resize(); // Resize Babylon engine
-                        console.log("Page visibility changed, resizing engine.");
-                        }
-                    else{
-                        console.log("No changes in page visibility.")
-                        }
+                document.addEventListener("click", () => {
+                    console.log("Manually triggering resize.");
+                    engine.resize()
                     });
 
                 // Hide Babylon.js canvas until MindAR detects image
