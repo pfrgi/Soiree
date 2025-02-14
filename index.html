@@ -13,12 +13,17 @@
 
 
     <style>
-        body { margin: 0; overflow: hidden; }
-        canvas { width: 100%; height: 100% }
+        body { margin: 0; overflow: hidden; display: flex; justify-content: center; align-items: center; height: 100vh; background: black; }
+        #mindar-container { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; }
+        #renderCanvas { display: none; position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 2; }
     </style>
 </head>
 
 <body>
+    <!-- MindAR Container -->
+    <div id="mindar-container"></div>
+       
+    <!-- Babylon.js Canvas -->
     <canvas id="renderCanvas"></canvas> <!-- Babylon.js requires a canvas -->
 
     <script>
@@ -35,7 +40,7 @@
             try {
                 // Initialize MindAR
                 const mindarThree = new window.MINDAR.IMAGE.MindARThree({
-                    container: document.body,
+                    container: document.getElementById("mindar-container"),
                     imageTargetSrc: "https://pfrgi.github.io/Soiree/targets10.mind",
                     });
 
@@ -50,8 +55,22 @@
                 camera.attachControl(canvas, true);
                 const light = new BABYLON.HemisphericLight("light", new BABYLON.Vector3(0, 1, 0), scene);
 
-                // Add a simple 3D objec, a sphere
+                // Add a simple 3D object, a sphere
                 const sphere = BABYLON.MeshBuilder.CreateSphere("sphere", { diameter: 1 }, scene);
+
+                // Hide Babylon.js canvas until MindAR detects image
+                canvas.style.display = "none";
+
+                // Listen for image detection
+                mindarThree.onTargetFound = () => {
+                    console.log("Target Found! Showing Babylon.js scene.");
+                    canvas.style.display = "block"; // Show 3D scene
+                };
+
+                mindarThree.onTargetLost = () => {
+                    console.log("Target Lost! Hiding Babylon.js scene.");
+                    canvas.style.display = "none"; // Hide 3D scene
+                };
 
                 // Render the scene
                 engine.runRenderLoop(() => {
