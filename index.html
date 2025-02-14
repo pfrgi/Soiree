@@ -85,10 +85,10 @@
                     };
 
                 // ..
-                anchor.onTargetLost = () => {
-                console.log("Target Lost! Hiding Babylon.js scene.");
+                anchor.addEventListener("targetLost", () => {
+                console.log("Target Lost! Hiding 3D object...");
                 canvas.style.display = "none"; // Hide 3D scene
-                };
+                });
 
                 // Render the scene
                 engine.runRenderLoop(() => {
