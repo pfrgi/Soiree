@@ -95,12 +95,10 @@
 
                 // Resize event
                 window.addEventListener("visibilitychange", () => {
-                    if (!document.hidden) {
-                        console.log("Resizing..");
-                        canvas.width = window.innerWidth;
-                        canvas.height = window.innerHeight;
-                        engine.resize();
-                    }
+                    console.log("Resizing..");
+                    canvas.width = window.innerWidth;
+                    canvas.height = window.innerHeight;
+                    engine.resize();
                     });
                 
                 } catch (error) {
