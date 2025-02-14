@@ -59,12 +59,24 @@
                 scene.clearColor = new BABYLON.Color4(0, 0, 0, 0); // Set transparent background
                 const camera = new BABYLON.ArcRotateCamera("Camera", Math.PI / 2, Math.PI / 4, 4, BABYLON.Vector3.Zero(), scene);
                 camera.attachControl(canvas, true);
-                const light = new BABYLON.HemisphericLight("light", new BABYLON.Vector3(0, 1, 0), scene);
-
-                document.addEventListener("click", () => {
+                const light = new BABYLON.HemisphericLight("light", new BABYLON.Vector3(0, 1, 0), scene);   
+                
+                document.addEventListener("visibilitychange", () => {
+                    if (!document.hidden) {
+                        console.log("Page became visible again.");
+                        if (typeof engine !== "undefined") {
+                            engine.resize();
+                            console.log("Engine resized successfully.");
+                        } else {
+                        console.warn("Engine is undefined, cannot resize.");
+                        }
+                        }
+                    });
+                
+                /*document.addEventListener("click", () => {
                     console.log("Manually triggering resize.");
                     engine.resize()
-                    });
+                    });*/
 
                 // Hide Babylon.js canvas until MindAR detects image
                 canvas.style.display = "none";
@@ -99,6 +111,13 @@
                     canvas.height = window.innerHeight;
                     engine.resize();
                     });
+
+                /*window.addEventListener("visibilitychange", () => {
+                    if (!document.hidden) {
+                    console.log("Page became visible again. Forcing resize...");
+                    window.dispatchEvent(new Event("resize")); // Manually trigger the resize event
+                     }
+                    });*/
                   
                 } catch (error) {
                 console.error("An error occurred:", error);
