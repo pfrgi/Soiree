@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebAR with MindAR.js + Babylon.js</title>
+
+    <!-- Load MindAR.js -->
+    <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.1/dist/mindar-image-three.prod.js" defer></script>
+
+    <!-- Load Babylon.js -->
+    <script src="https://cdn.babylonjs.com/babylon.js"></script>
+
+
+    <style>
+        body { margin: 0; overflow: hidden; }
+        canvas { width: 100%; height: 100% }
+    </style>
+</head>
+
+<body>
+    <canvas id="renderCanvas"></canvas> <!-- Babylon.js requires a canvas -->
+
+    <script>
+        document.addEventListener("DOMContentLoaded", async function () {
+            
+            console.log("Starting WebAR app...");
+
+            // Ensure MindAR is loaded before using it
+            if (!window.MINDAR || !window.MINDAR.IMAGE) {
+                console.error("MindAR failed to load.");
+                return;
+                }
+            
+            try {
+                // Initialize MindAR
+                const mindarThree = new window.MINDAR.IMAGE.MindARThree({
+                    container: document.body,
+                    imageTargetSrc: "http://pfrgi.github.io/Soiree/targets10.mind",
+                    });
+
+                await mindarThree.start();
+                console.log("MindAR is ready!");
+
+                // Initialize Babylon.js Scene
+                const canvas = document.getElementById("renderCanvas");
+                const engine = new BABYLON.Engine(canvas, true);
+                const scene = new BABYLON.Scene(engine);
+                const camera = new BABYLON.ArcRotateCamera("Camera", Math.PI / 2, Math.PI / 4, 4, BABYLON.Vector3.Zero(), scene);
+                camera.attachControl(canvas, true);
+                const light = new BABYLON.HemisphericLight("light", new BABYLON.Vector3(0, 1, 0), scene);
+
+                // Add a simple 3D objec, a sphere
+                const sphere = BABYLON.MeshBuilder.CreateSphere("sphere", { diameter: 1 }, scene);
+
+                // Render the scene
+                engine.runRenderLoop(() => {
+                    scene.render();
+                    });
+
+                // Resize event
+                window.addEventListener("resize", () => {
+                    engine.resize();
+                    });
+                
+            } catch (error) {
+                console.error("An error occurred:", error);
+            }
+        });
+    </script>
+</body>
+</html>
