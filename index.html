@@ -80,10 +80,12 @@
                     // Fix scaling issue
                     sphere.scaling = new BABYLON.Vector3(1, 1, 1); // Ensures uniform scaling
                     sphere.setPivotMatrix(BABYLON.Matrix.Identity());
+
+                    anchor.group.add(sphere); // Attach sphere to MindAR's tracking
                     };
 
-                // Listen for image detection
-                mindarThree.onTargetLost = () => {
+                // ..
+                anchor.onTargetLost = () => {
                 console.log("Target Lost! Hiding Babylon.js scene.");
                 canvas.style.display = "none"; // Hide 3D scene
                 };
