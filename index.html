@@ -75,15 +75,25 @@
                 anchor.onTargetFound = () => {
                     console.log("Target Found! Placing 3D object...");
                     canvas.style.display = "block"; // Show 3D scene
-                    const sphere = BABYLON.MeshBuilder.CreateSphere("sphere", { diameter: 1 }, scene);
+                    
+                    /*const sphere = BABYLON.MeshBuilder.CreateSphere("sphere", { diameter: 1 }, scene);
                     sphere.position = new BABYLON.Vector3(0, 0, 0); // Center it on the target
                     // Fix scaling issue
                     sphere.scaling = new BABYLON.Vector3(1, 1, 1); // Ensures uniform scaling
                     sphere.setPivotMatrix(BABYLON.Matrix.Identity());
 
-                    anchor.group.add(sphere); // Attach sphere to MindAR's tracking
-                    };
+                    anchor.group.add(sphere); // Attach sphere to MindAR's tracking*/
 
+                    // Load GLB Model
+                    BABYLON.SceneLoader.ImportMesh("", "https://pfrgi.github.io/Soiree/", "Rover8.glb", scene, function (meshes) {
+                        const model = meshes[0]; // Get the first mesh in the GLB file
+                        model.position = new BABYLON.Vector3(0, 0, 0); // Adjust position if needed
+                        model.scaling = new BABYLON.Vector3(1, 1, 1); // Adjust scale if needed
+                        model.rotationQuaternion = null; // Reset rotation if necessary
+        
+                        console.log("Model loaded successfully!");
+                        });
+                };
                 /* ..
                 anchor.addEventListener("targetLost", () => {
                 console.log("Target Lost! Hiding 3D object...");
