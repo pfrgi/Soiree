@@ -15,7 +15,7 @@
     <style>
         body { margin: 0; overflow: hidden; position: relative; display: flex; justify-content: center; align-items: center; height: 100vh; background: black; }
         #mindar-container { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; }
-        #renderCanvas { display: none; position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 2; }
+        #renderCanvas { display: none; position: absolute; top: 0; left: 0; width: 100%; height: 100vh; z-index: 2; }
     </style>
 </head>
 
@@ -72,6 +72,7 @@
                     canvas.style.display = "block"; // Show 3D scene
                     const sphere = BABYLON.MeshBuilder.CreateSphere("sphere", { diameter: 1 }, scene);
                     sphere.position = new BABYLON.Vector3(0, 0, 0); // Center it on the target
+                    sphere.scaling = new BABYLON.Vector3(1, 1, 1); // Ensures uniform scaling
                     };
 
                 // Listen for image detection
