@@ -94,6 +94,12 @@
         
                         console.log("Model loaded successfully!");
                         });
+
+                    // Play the first animation if available
+                    if (animationGroups.length > 0) {
+                        animationGroups[4].start(true); // Loop animation
+                        console.log("Animation started!");
+                    }
                 };
                 /* ..
                 anchor.addEventListener("targetLost", () => {
